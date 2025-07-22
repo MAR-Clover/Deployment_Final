@@ -1,7 +1,13 @@
 const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
+const fs = require('fs');
 
-const dbPath = process.env.DB_FILE || path.join('/tmp', 'database.sqlite');
+const dir = '/tmp';
+if (!fs.existsSync(dir)) {
+  fs.mkdirSync(dir);
+}
+
+const dbPath = process.env.DB_FILE || path.join(dir, 'database.sqlite');
 const db = new sqlite3.Database(dbPath, (err) => {
   if (err) {
     console.error('Failed to connect to DB:', err.message);
@@ -10,6 +16,7 @@ const db = new sqlite3.Database(dbPath, (err) => {
   }
 });
 
+// tables creation
 db.serialize(() => {
   db.run(`CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -24,5 +31,6 @@ db.serialize(() => {
     FOREIGN KEY(user_id) REFERENCES users(id)
   )`);
 });
-//testing
+
 module.exports = db;
+
