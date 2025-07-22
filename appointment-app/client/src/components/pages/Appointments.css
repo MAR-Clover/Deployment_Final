@@ -1,11 +1,18 @@
 .appointments-container {
-    max-width: 500px;
-    margin: 100px auto;
-    padding: 2rem;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background: #fefefe;
-  }
+  max-width: 500px;
+  margin: 100px auto;
+  padding: 2rem;
+  border-radius: 8px;
+  background: #fefefe;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
+  transition: box-shadow 0.3s ease;
+}
+
+.appointments-container:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15); 
+}
+
   
   .appointments-container h2 {
     text-align: center;
@@ -21,8 +28,9 @@
   }
   
   .appointments-container button {
-    width: 100%;
+    width: 20%;
     padding: 0.75rem;
+    margin: 0.50rem;
     background-color: #28a745;
     color: white;
     border: none;
@@ -33,13 +41,20 @@
   .appointments-container button:hover {
     background-color: #218838;
   }
-  .delete {
-    width: 100%;
+  .appointments-container button.delete-btn {
+    width: 20%;
     padding: 0.75rem;
-    background-color: #ff0000;
+    margin: 0.50rem;
+    background-color: #dc3545; /* red */
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
   }
+  
+  .appointments-container button.delete-btn:hover {
+    background-color: #b52a37; /* darker red on hover */
+  }
+  
+  
   

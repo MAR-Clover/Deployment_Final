@@ -8,6 +8,9 @@ function Appointments() {
   const navigate = useNavigate();
   const [appointments, setAppointments] = useState([])
   const token = localStorage.getItem('token')
+  const [editingId, setEditingId] = useState(null);
+  const [editedTime, setEditedTime] = useState('');
+
 
   const handleDelete = async (id) => {
     try{
@@ -24,6 +27,25 @@ function Appointments() {
         alert('Failed to delete appointment')
         }
     }
+
+    const handleEdit = async (id, newTime) => {
+      try {
+        await axios.put(`http://localhost:4000/appointments/${id}`, {
+          time_slot: newTime
+        }, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        alert('Appointment updated!');
+        // Optionally, refresh appointments list here
+        await fetchAppointments();
+      } catch (error) {
+        console.error('Failed to update appointment:', error);
+        alert('Failed to update appointment');
+      }
+    };
+    
 
   const fetchAppointments = async () => {
     try{
@@ -81,19 +103,41 @@ function Appointments() {
         />
         <button type="submit">Book</button>
       </form>
-
+  
       <h2>Booked Appointments</h2>
-        <ul>
-            {appointments.map((appt) => (
-                <li key={appt.id}>
-                    <p> Appointment Number: {appt.id}</p>
-                    {new Date(appt.time_slot).toLocaleString()}
-                    <button onClick={()=> handleDelete(appt.id)}>Delete</button>
-                </li>
-            ))}
-        </ul>
+      <ul>
+        {appointments.map((appt) => (
+          <li key={appt.id}>
+            <p>Appointment Number: {appt.id}</p>
+            {editingId === appt.id ? (
+              <>
+                <input
+                  type="datetime-local"
+                  value={editedTime}
+                  onChange={e => setEditedTime(e.target.value)}
+                />
+                <button onClick={() => {
+                  handleEdit(appt.id, editedTime);
+                  setEditingId(null);
+                }}>Save</button>
+                <button onClick={() => setEditingId(null)}>Cancel</button>
+              </>
+            ) : (
+              <>
+                <span>{new Date(appt.time_slot).toLocaleString()}</span>
+                <button className="delete-btn" onClick={() => handleDelete(appt.id)}>Delete</button>
+                <button onClick={() => {
+                  setEditingId(appt.id);
+                  setEditedTime(appt.time_slot);
+                }}>Edit</button>
+              </>
+            )}
+          </li>
+        ))}
+      </ul>
     </div>
   );
+  
 }
 
 export default Appointments;
