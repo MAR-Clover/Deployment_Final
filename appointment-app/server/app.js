@@ -3,13 +3,15 @@ const cors = require('cors');
 const db = require('./db');
 const app = express();
 const authRoutes = require("./routes/auth")
+require('dotenv').config();
+
 
 app.use(cors());
 app.use(express.json());
 app.use('/auth', authRoutes)
 
 const jwt = require('jsonwebtoken');
-const SECRET = 'supersecretkey';
+const SECRET = process.env.SECRET || 'fallbacksecret';
 
 function verifyToken(req, res, next) {
   const token = req.headers.authorization?.split(' ')[1];
