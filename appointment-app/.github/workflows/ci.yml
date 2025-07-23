@@ -1,9 +1,5 @@
 name: Node.js CI
 
-defaults:
-  run:
-    working-directory: ./appointment-app
-
 on:
   push:
     branches: [ "main" ]
@@ -25,6 +21,8 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+        working-directory: ./appointment-app
 
       - name: Run tests
         run: npm test
+        working-directory: ./appointment-app
