@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import './Login.css';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:4000';
+const API_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:4000';
 
 function Register() {
   const [email, setEmail] = useState('');
@@ -27,6 +27,10 @@ function Register() {
   return (
     <div className="login-container">
       <h2>Register</h2>
+      <div>
+      <h3>Backend URL from env:</h3>
+      <p>{process.env.REACT_APP_BACKEND_URL || 'No backend URL set'}</p>
+    </div>
       <form onSubmit={handleRegister}>
         <input 
           type="email" 
