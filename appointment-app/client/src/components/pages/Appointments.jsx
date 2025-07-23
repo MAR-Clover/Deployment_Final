@@ -83,6 +83,13 @@ function Appointments() {
   return (
     <div className="appointments-container">
       <h2>Book Appointment</h2>
+      <div className="appointments-container">
+      <h3>Backend URL: {process.env.REACT_APP_BACKEND_URL}</h3>  {/* Add this */}
+      
+      {/* existing JSX below */}
+      <h2>Book Appointment</h2>
+      {/* rest of your component */}
+    </div>
       <form onSubmit={handleBook}>
         <input
           type="datetime-local"
