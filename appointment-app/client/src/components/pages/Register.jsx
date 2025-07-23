@@ -14,7 +14,10 @@ function Register() {
     e.preventDefault();
 
     try {
-      await axios.post(`${API_URL}/auth/register`, { email, password });
+      await axios.post(`${process.env.REACT_APP_BACKEND_URL}/auth/register`, {
+        email,
+        password,
+      });
 
       alert('Registration successful! You can now log in.');
       navigate('/');
