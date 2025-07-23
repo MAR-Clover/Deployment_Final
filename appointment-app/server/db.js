@@ -1,13 +1,10 @@
 const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
-const fs = require('fs');
 
-const dir = '/tmp';
-if (!fs.existsSync(dir)) {
-  fs.mkdirSync(dir);
-}
+// Use RENDER_DATA_DIR if set, otherwise fallback to /tmp (for local/dev)
+const dir = process.env.RENDER_DATA_DIR || '/tmp';
+const dbPath = path.join(dir, 'database.sqlite');
 
-const dbPath = process.env.DB_FILE || path.join(dir, 'database.sqlite');
 const db = new sqlite3.Database(dbPath, (err) => {
   if (err) {
     console.error('Failed to connect to DB:', err.message);
@@ -16,7 +13,6 @@ const db = new sqlite3.Database(dbPath, (err) => {
   }
 });
 
-// tables creation
 db.serialize(() => {
   db.run(`CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -33,4 +29,3 @@ db.serialize(() => {
 });
 
 module.exports = db;
-
