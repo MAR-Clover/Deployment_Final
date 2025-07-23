@@ -32,7 +32,7 @@ function Register() {
       <h2>Register</h2>
       <div>
       <h3>Backend URL from env:</h3>
-      <p>{process.env.REACT_APP_BACKEND_URL || 'No backend URL set'}</p>
+    
     </div>
       <form onSubmit={handleRegister}>
         <input 
