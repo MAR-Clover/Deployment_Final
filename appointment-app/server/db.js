@@ -1,8 +1,15 @@
 const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
+const fs = require('fs');
 
 // Use RENDER_DATA_DIR if set, otherwise fallback to /tmp (for local/dev)
 const dir = process.env.RENDER_DATA_DIR || '/tmp';
+
+// Ensure the directory exists
+if (!fs.existsSync(dir)) {
+  fs.mkdirSync(dir, { recursive: true });
+}
+
 const dbPath = path.join(dir, 'database.sqlite');
 
 const db = new sqlite3.Database(dbPath, (err) => {
